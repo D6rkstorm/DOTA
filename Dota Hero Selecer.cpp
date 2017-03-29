@@ -1,7 +1,10 @@
-#include <string>
 #include <iostream>
-#include <cstdlib>
+#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -12,10 +15,11 @@ struct Hero{
 
 void findHero(Hero characters[], int c);
 
-int main
+int main()
 {
 	ifstream infile;
 	int i = 0;
+	char cNum[1];
 	Hero characters[113];
 
 	infile.open("Hero.csv");
@@ -24,8 +28,9 @@ int main
 		int c = 0;
 		while(infile.good())
 		{
-			infile.getline(characters[c].name,256,';');
-			infile.getline(characters[c].role,256,';');
+			infile.getline(characters[c].name,256,',');
+			infile.getline(cNum,256,',');
+			characters[c].role = atoi(cNum);
 			i++;
 			c++;
 		}
@@ -41,7 +46,7 @@ int main
 
 void findHero(Hero characters[], int c)
 {
-	vector<int> arr;
+	vector<string> arr;
 	int result;
 	cout << "------------What Position do you want to play?------------" << endl 
 		 << "------------For Offlane Enter--3--------------------------" << endl
@@ -54,14 +59,14 @@ void findHero(Hero characters[], int c)
 	if(result == 6)
 	{
 		int r = (rand() % 113) + 1;
-		cout << characters[r]->name << endl;
+		cout << characters[r].name << endl;
 	}
 	for(int i = 0; i < c; i++)
 	{
-		if(characters[i]->role == result)
-			{arr.push_back(character->name);}
+		if(characters[i].role == result)
+			{arr.push_back(characters[i].name);}
 	}
 	int k = (rand() % arr.size()) + 1;
-	cout << arr[k]->name;
+	cout << arr[k];
 	cout << endl << "Finished" << endl;
 }
